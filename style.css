@@ -1,0 +1,146 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
+    color: #FFFFFF;
+    background: #000000;
+}
+
+body {
+    overflow: hidden;
+}
+
+.container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: 1px;
+}
+
+.result_view {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr) 20px;
+    gap: 1px;
+    font-family: monospace;
+}
+
+.result {
+    text-align: right;
+    position: relative;
+    overflow: hidden;
+    background: #514D4C;
+}
+
+.result_icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: #625E5E;
+    text-align: center;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.result_field {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 8px;
+}
+
+.result.selected {
+    background: #625E5E;
+}
+
+.result.selected>.result_icon {
+    background: #7A7777;
+}
+
+#dec_result_field {
+    font-size: 17px;
+}
+
+#hex_result_field {
+    font-size: 17px;
+}
+
+#bin_result_field {
+    font-size: 10px;
+}
+
+.formula_wrapper {
+    position: relative;
+    /* background: #625E5E; */
+}
+
+#type {
+    /* background: #514D4C; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    text-align: center;
+    line-height: 20px;
+}
+
+#formula {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: right;
+}
+#formula.warn {
+    color: red;
+}
+
+.button_board {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.btn {
+    position: relative;
+}
+
+.btn::before {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+.btn:hover, .btn.disabled {
+    opacity: .7;
+}
+
+.btn_inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 24px;
+}
+
+.num_btn {
+    background: #7A7777;
+}
+
+.ctl_btn {
+    background: #625E5E;
+}
+
+.op_btn {
+    background: #F2A23C;
+}

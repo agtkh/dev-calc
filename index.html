@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet">
+    <script src="eval-calculation-1.0.0.js"></script>
+    <script src="jquery-3.6.3.min.js"></script>
+    <!-- <script src="calc.js"></script> -->
+    <script src='https://cdn.jsdelivr.net/npm/bignumber.js@9.1.0/bignumber.min.js'></script>
+    <script src="javascript.js"></script>
+    <title>Dev Calc</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="result_view">
+            <div id="dec_result" data-base="dec" class="result selected">
+                <div class="result_icon">DEC</div>
+                <div class="result_field" id="dec_result_field"></div>
+            </div>
+            <div id="hex_result" data-base="hex" class="result">
+                <div class="result_icon">HEX</div>
+                <div class="result_field" id="hex_result_field"></div>
+            </div>
+            <div id="bin_result" data-base="bin" class="result">
+                <div class="result_icon">BIN</div>
+                <div class="result_field" id="bin_result_field"></div>
+            </div>
+            <div class="formula_wrapper">
+                <div id="type">int</div>
+                <div id="formula"></div>
+            </div>
+        </div>
+        <div class="button_board">
+            <div class="ctl_btn btn" id="btn_clear">
+                <div class="btn_inner">AC</div>
+            </div>
+            <div class="ctl_btn btn" id="btn_del">
+                <div class="btn_inner">DEL</div>
+            </div>
+            <div class="ctl_btn btn">
+                <div class="btn_inner">+/-</div>
+            </div>
+            <div class="op_btn btn" data-key="&lt;&lt;">
+                <div class="btn_inner">&lt;&lt;</div>
+            </div>
+            <div class="op_btn btn" data-key="&gt;&gt;">
+                <div class="btn_inner">&gt;&gt;</div>
+            </div>
+
+
+
+            <div class="num_btn btn disabled dec_disable bin_disable" data-key="D">
+                <div class="btn_inner">D</div>
+            </div>
+            <div class="num_btn btn disabled dec_disable bin_disable" data-key="E">
+                <div class="btn_inner">E</div>
+            </div>
+            <div class="num_btn btn disabled dec_disable bin_disable" data-key="F">
+                <div class="btn_inner">F</div>
+            </div>
+            <div class="op_btn btn" data-key="~">
+                <div class="btn_inner">~</div>
+            </div>
+            <div class="op_btn btn" data-key="**">
+                <div class="btn_inner">**</div>
+            </div>
+
+            <div class="num_btn btn disabled dec_disable bin_disable" data-key="A">
+                <div class="btn_inner">A</div>
+            </div>
+            <div class="num_btn btn disabled dec_disable bin_disable" data-key="B">
+                <div class="btn_inner">B</div>
+            </div>
+            <div class="num_btn btn disabled dec_disable bin_disable" data-key="C">
+                <div class="btn_inner">C</div>
+            </div>
+            <div class="op_btn btn" data-key="^">
+                <div class="btn_inner">^</div>
+            </div>
+            <div class="op_btn btn" data-key="|">
+                <div class="btn_inner">|</div>
+            </div>
+
+            <div class="num_btn btn bin_disable" data-key="7">
+                <div class="btn_inner">7</div>
+            </div>
+            <div class="num_btn btn bin_disable" data-key="8">
+                <div class="btn_inner">8</div>
+            </div>
+            <div class="num_btn btn bin_disable" data-key="9">
+                <div class="btn_inner">9</div>
+            </div>
+            <div class="op_btn btn" data-key="*">
+                <div class="btn_inner">*</div>
+            </div>
+            <div class="op_btn btn" data-key="&">
+                <div class="btn_inner">&</div>
+            </div>
+
+            <div class="num_btn btn bin_disable" data-key="4">
+                <div class="btn_inner">4</div>
+            </div>
+            <div class="num_btn btn bin_disable" data-key="5">
+                <div class="btn_inner">5</div>
+            </div>
+            <div class="num_btn btn bin_disable" data-key="6">
+                <div class="btn_inner">6</div>
+            </div>
+            <div class="op_btn btn" data-key="-">
+                <div class="btn_inner">-</div>
+            </div>
+            <div class="op_btn btn" data-key="(">
+                <div class="btn_inner">(</div>
+            </div>
+
+            <div class="num_btn btn" data-key="1">
+                <div class="btn_inner">1</div>
+            </div>
+            <div class="num_btn btn bin_disable" data-key="2">
+                <div class="btn_inner">2</div>
+            </div>
+            <div class="num_btn btn bin_disable" data-key="3">
+                <div class="btn_inner">3</div>
+            </div>
+            <div class="op_btn btn" data-key="+">
+                <div class="btn_inner">+</div>
+            </div>
+            <div class="op_btn btn"data-key=")">
+                <div class="btn_inner">)</div>
+            </div>
+
+            <div class="num_btn btn" data-key="0">
+                <div class="btn_inner">0</div>
+            </div>
+            <div class="num_btn btn" data-key="">
+                <div class="btn_inner">.</div>
+            </div>
+            <div class="num_btn btn" data-key=".">
+                <div class="btn_inner">.</div>
+            </div>
+            <div class="ctl_btn btn" id="eq_btn">
+                <div class="btn_inner">=</div>
+            </div>
+            <div class="ctl_btn btn">
+                <div class="btn_inner">=</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
