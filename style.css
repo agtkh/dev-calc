@@ -17,6 +17,7 @@ body {
 .container {
     position: absolute;
     width: 100%;
+    max-width: 360px;
     height: 100%;
     display: grid;
     grid-template-rows: 1fr auto;
@@ -98,6 +99,7 @@ body {
     line-height: 20px;
     text-align: right;
 }
+
 #formula.warn {
     color: red;
 }
@@ -111,26 +113,13 @@ body {
 }
 
 .btn {
-    position: relative;
-}
-
-.btn::before {
-    content: "";
-    display: block;
-    padding-bottom: 100%;
-}
-
-.btn:hover, .btn.disabled {
-    opacity: .7;
-}
-
-.btn_inner {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     text-align: center;
     font-size: 24px;
+}
+
+.btn:hover,
+.btn.disabled {
+    opacity: .7;
 }
 
 .num_btn {

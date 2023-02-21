@@ -50,7 +50,7 @@ class Formula {
             // 数字だった場合
             return last_key;
         } else if (last_key == '=') {
-            let re = calc_formula(this.to_str().slice(0,-1));
+            let re = calc_formula(this.to_str().slice(0, -1));
             if (re != null) {
                 return re;
             }
@@ -72,7 +72,7 @@ class Formula {
                 // 連続の記号入力
                 if (last_key == '=') {
                     // 結果を計算して計算式を更新
-                    this.formula_list= [calc_formula(this.to_str().slice(0, -1)), key];
+                    this.formula_list = [calc_formula(this.to_str().slice(0, -1)), key];
                 } else {
                     // 上書き
                     this.formula_list[this.formula_list.length - 1] = key;
@@ -154,6 +154,10 @@ function update(formula) {
     $('#formula').text(formula_str);
 }
 function change_input_base(input_base, formula) {
+    /**
+     * 入力ベース(base)の変更
+     * 不必要ボタンの無効化など
+     */
     $('.result.selected').removeClass('selected');
     $('.btn.disabled').removeClass('disabled');
     if (input_base == 'hex') {
@@ -168,24 +172,38 @@ function change_input_base(input_base, formula) {
         $('.btn.dec_disable').addClass('disabled');
         formula.change_base(10);
     }
-    update(formula);
 }
+function fix_layout() {
+    /**
+     * HTMLレイアウトの調節
+     */
 
+    $('.btn').each(function() {
+        let w = $(this).width();
+        $(this).height(w);
+        $(this).css('line-height', w + 'px');
+    });
+    $('.result_icon').each(function () {
+        // 
+        let h = $(this).height();
+        $(this).width(h);
+        $(this).css('line-height', h + 'px');
+        $('#type').width(h);
+    });
+}
 $(function () {
+    fix_layout();
+    $(window).on('resize',fix_layout);
+
     let current_formula = new Formula();
     update(current_formula);
 
     $('.result').on('click', function (e) {
         let input_base = $(this).data('base');
         change_input_base(input_base, current_formula);
+        update(formula);
     });
 
-
-    $('.result_icon').each(function () {
-        $(this).width($(this).height());
-        $(this).css('line-height', $(this).height() + 'px');
-        $('#type').width($(this).height() + 'px');
-    });
 
     $('#btn_clear').on('click', function () {
         current_formula.clear();
@@ -198,7 +216,6 @@ $(function () {
     });
 
     $('.num_btn').on('click', function () {
-        console.log('num btn pushed0');
         let btn_key = $(this).data('key');
         const hex_dict = "0123456789ABCDEF";
         current_formula.push(hex_dict.indexOf(btn_key));
@@ -212,6 +229,5 @@ $(function () {
     $('#eq_btn').on('click', function () {
         current_formula.push('=');
         update(current_formula);
-
     });
 });
