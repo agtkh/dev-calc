@@ -45,6 +45,7 @@ class Formula {
          * 数字入力中はその数字。
          * = の後は計算結果など
          */
+        if (this.formula_list.length == 0) { return 0; }
         let last_key = this.formula_list[this.formula_list.length - 1];
         if (typeof last_key == 'number') {
             // 数字だった場合
@@ -73,19 +74,36 @@ class Formula {
                 if (last_key == '=') {
                     // 結果を計算して計算式を更新
                     this.formula_list = [calc_formula(this.to_str().slice(0, -1)), key];
-                } else {
+                } else if (last_key != ')'){
                     // 上書き
                     this.formula_list[this.formula_list.length - 1] = key;
+                } else {
+                    this.formula_list.push(key);
                 }
             } else {
                 this.formula_list.push(key);
             }
         }
     }
+    pop() {
+        /**
+         * 直近の削除
+         */
+        if (this.formula_list.length != 0) {
+            let last_key = this.formula_list[this.formula_list.length - 1];
+            if (typeof last_key == 'number') {
+                this.formula_list[this.formula_list.length - 1] = parseInt(last_key / this.base);
+            } else {
+                this.formula_list.pop();
+            }
+        }
+
+    }
     to_str() {
         /**
          * 数式を文字列化して返す。
          */
+        if (this.formula_list.length == 0) { return '0'; }
         return this.formula_list.join('');
     }
     change_base(base) {
@@ -93,11 +111,11 @@ class Formula {
          * 入力のベース(進数)を変更する。
          */
         this.base = base;
-        let last_key = this.formula_list[this.formula_list.length - 1];
-        if (typeof last_key == "number") {
-            // 入力途中の場合、入力中の数字を消す。
-            this.formula_list.pop();
-        }
+        // let last_key = this.formula_list[this.formula_list.length - 1];
+        // if (typeof last_key == "number") {
+        //     // 入力途中の場合、入力中の数字を消す。
+        //     this.formula_list.pop();
+        // }
     }
     clear() {
         // 計算式のクリア
@@ -132,7 +150,7 @@ function gen_hex_html(val) {
     const hex_dict = "0123456789ABCDEF";
     let hex_str = '';
     for (let i = 0; i < 16; i++) {
-        if (i != 0 && i % 2 == 0) { hex_str = ' ' + hex_str; }
+        if (i != 0 && i % 4 == 0) { hex_str = ' ' + hex_str; }
         hex_str = hex_dict[val & 0xF] + hex_str;
         val = (val >> 4);
     }
@@ -211,14 +229,15 @@ $(function () {
     });
 
     $('#btn_del').on('click', function () {
-        // To-Do
+        current_formula.pop();
         update(current_formula);
     });
 
     $('.num_btn').on('click', function () {
+        if ($(this).hasClass('disabled')) return;
         let btn_key = $(this).data('key');
-        const hex_dict = "0123456789ABCDEF";
-        current_formula.push(hex_dict.indexOf(btn_key));
+        let num = "0123456789ABCDEF".indexOf(btn_key);
+        current_formula.push(num);
         update(current_formula);
     });
     $('.op_btn').on('click', function () {
