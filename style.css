@@ -122,7 +122,7 @@ body {
     font-size: 24px;
 }
 
-.btn:hover {
+.btn:hover, .btn.pushed {
     opacity: .8;
 }
 .btn.disabled {
@@ -139,5 +139,5 @@ body {
 }
 
 .op_btn {
-    background: #F2A23C;
+    background: #3a8af2;
 }

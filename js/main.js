@@ -23,11 +23,12 @@ function is_num(char) {
     const hex_dict = "0123456789ABCDEF";
     return (hex_dict.indexOf(char) != -1);
 }
-function is_op() {
+function is_op(char) {
     /**
      * これは計算記号か
      */
-    return !(this.is_num(char));
+    const op_dict = "+-*/%<>~&|^()";
+    return (op_dict.indexOf(char) != -1);
 }
 
 
@@ -74,7 +75,7 @@ class Formula {
                 if (last_key == '=') {
                     // 結果を計算して計算式を更新
                     this.formula_list = [calc_formula(this.to_str().slice(0, -1)), key];
-                } else if (last_key != ')'){
+                } else if (last_key != ')') {
                     // 上書き
                     this.formula_list[this.formula_list.length - 1] = key;
                 } else {
@@ -161,11 +162,11 @@ function update(formula) {
     /**
      * 表示の更新
      */
-    let display_num = formula.display_num();
+    let display_n = formula.display_num();
     let formula_str = formula.to_str();
-    $('#dec_result_field').html(display_num);
-    $('#bin_result_field').html(gen_bin_html(display_num));
-    $('#hex_result_field').html(gen_hex_html(display_num));
+    $('#dec_result_field').html(display_n);
+    $('#bin_result_field').html(gen_bin_html(display_n));
+    $('#hex_result_field').html(gen_hex_html(display_n));
 
     $('#formula').removeClass('warn'); // ******************
 
@@ -191,12 +192,36 @@ function change_input_base(input_base, formula) {
         formula.change_base(10);
     }
 }
+function next_input_base() {
+    let current_input_base = $('.result.selected').first().data('base');
+    if (current_input_base == 'dec') {
+        return 'hex';
+    }
+    else if (current_input_base == 'hex') {
+        return 'bin';
+    }
+    else {
+        return 'dec';
+    }
+}
+function prev_input_base() {
+    let current_input_base = $('.result.selected').first().data('base');
+    if (current_input_base == 'dec') {
+        return 'bin';
+    }
+    else if (current_input_base == 'hex') {
+        return 'dec';
+    }
+    else {
+        return 'hex';
+    }
+}
 function fix_layout() {
     /**
      * HTMLレイアウトの調節
      */
 
-    $('.btn').each(function() {
+    $('.btn').each(function () {
         let w = $(this).width();
         $(this).height(w);
         $(this).css('line-height', w + 'px');
@@ -211,7 +236,7 @@ function fix_layout() {
 }
 $(function () {
     fix_layout();
-    $(window).on('resize',fix_layout);
+    $(window).on('resize', fix_layout);
 
     let current_formula = new Formula();
     update(current_formula);
@@ -219,7 +244,7 @@ $(function () {
     $('.result').on('click', function (e) {
         let input_base = $(this).data('base');
         change_input_base(input_base, current_formula);
-        update(formula);
+        update(current_formula);
     });
 
 
@@ -248,5 +273,41 @@ $(function () {
     $('#eq_btn').on('click', function () {
         current_formula.push('=');
         update(current_formula);
+    });
+    $(window).on('keydown', function (e) {
+        // console.log('keydown:', e.key, e.keyCode);
+        let num = "0123456789ABCDEF".indexOf(e.key);
+        if (num != -1) {
+            // 数字の入力
+            current_formula.push(num);
+            update(current_formula);
+            return false;
+        }
+        if (is_op(e.key)) {
+            // 記号の入力
+            current_formula.push(e.key);
+            update(current_formula);
+            return false;
+        }
+        if (e.key == 'Enter') {
+            current_formula.push('=');
+            update(current_formula);
+            return false;
+        }
+        if (e.key == 'Backspace' || e.key == 'Delete') {
+            current_formula.pop();
+            update(current_formula);
+            return false;
+        }
+        if (e.key == 'ArrowUp' || e.key == 'ArrowLeft') {
+            change_input_base(prev_input_base(), current_formula);
+            update(current_formula);
+            return false;
+        }
+        if (e.key == 'ArrowDown' || e.key == 'ArrowRight') {
+            change_input_base(next_input_base(), current_formula);
+            update(current_formula);
+            return false;
+        }
     });
 });
