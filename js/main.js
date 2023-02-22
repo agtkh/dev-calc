@@ -15,13 +15,30 @@ function calc_formula(formula_str) {
     }
     return re;
 }
-
-function is_num(char) {
-    /**
-     * これは数字か
-     */
+function char_to_hex_num(char) {
     const hex_dict = "0123456789ABCDEF";
-    return (hex_dict.indexOf(char) != -1);
+    return hex_dict.indexOf(char);
+}
+function is_hex_num(char) {
+    /**
+     * これは16進数の数字か
+     */
+    return (char_to_hex_num(char) != -1);
+}
+function is_bin_num(char) {
+    /**
+     * これは2進数の数字か
+     */
+
+    const bin_dict = "01";
+    return (bin_dict.indexOf(char) != -1);
+}
+function is_dec_num() {
+    /**
+     * これは10進数の数字か
+     */
+    const dec_dict = "0123456789";
+    return (dec_dict.indexOf(char) != -1);
 }
 function is_op(char) {
     /**
@@ -192,8 +209,17 @@ function change_input_base(input_base, formula) {
         formula.change_base(10);
     }
 }
+function currrent_input_base() {
+    /**
+     * 現在の入力進数(base)を返す
+     */
+    return $('.result.selected').first().data('base');
+}
 function next_input_base() {
-    let current_input_base = $('.result.selected').first().data('base');
+    /**
+     * 次の入力進数(base)を返す
+     */
+    let current_input_base = currrent_input_base();
     if (current_input_base == 'dec') {
         return 'hex';
     }
@@ -205,11 +231,14 @@ function next_input_base() {
     }
 }
 function prev_input_base() {
-    let current_input_base = $('.result.selected').first().data('base');
-    if (current_input_base == 'dec') {
+    /**
+     * 前の入力進数(base)を返す
+     */
+    let curr_input_base = currrent_input_base();
+    if (curr_input_base == 'dec') {
         return 'bin';
     }
-    else if (current_input_base == 'hex') {
+    else if (curr_input_base == 'hex') {
         return 'dec';
     }
     else {
@@ -276,13 +305,19 @@ $(function () {
     });
     $(window).on('keydown', function (e) {
         // console.log('keydown:', e.key, e.keyCode);
-        let num = "0123456789ABCDEF".indexOf(e.key);
+
+        // 文字を数値に変換 (ex. f->15)
+        let num = char_to_hex_num(e.key.toUpperCase());
         if (num != -1) {
-            // 数字の入力
-            current_formula.push(num);
-            update(current_formula);
-            return false;
+            let curr_input_base = currrent_input_base();
+            if ((curr_input_base == 'dec' && is_dec_num(num)) || (curr_input_base == 'bin' && is_bin_num(num)) || curr_input_base == 'hex') {
+                // 数字の入力
+                current_formula.push(num);
+                update(current_formula);
+                return false;
+            }
         }
+
         if (is_op(e.key)) {
             // 記号の入力
             current_formula.push(e.key);
