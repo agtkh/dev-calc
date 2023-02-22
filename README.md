@@ -9,3 +9,7 @@
 - コピペ機能
 - 色コード
 - 
+
+## MIT Licence
+- [jQuery v3.6.3](https://jquery.org/)
+- [eval-calculation-1.0.0.js](https://gist.github.com/think49/54b074cab2145efddb48765652c74710)
