@@ -42,11 +42,12 @@ body {
     position: absolute;
     left: 0;
     top: 0;
-    bottom: 0;
     background: #625E5E;
     text-align: center;
     -webkit-user-select: none;
     user-select: none;
+    padding: 0.5em;
+    border-bottom-right-radius: 0.5em;
     cursor: pointer;
 }
 
@@ -66,15 +67,15 @@ body {
 }
 
 #dec_result_field {
-    font-size: 17px;
+    font-size: 20px;
 }
 
 #hex_result_field {
-    font-size: 17px;
+    font-size: 18px;
 }
 
 #bin_result_field {
-    font-size: 10px;
+    font-size: 11px;
 }
 
 .formula_wrapper {
@@ -83,13 +84,15 @@ body {
 }
 
 #type {
-    /* background: #514D4C; */
+    background: #3a8af2;
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
     text-align: center;
     line-height: 20px;
+    padding: 0 4px;
+    border-radius: 4px;
     user-select: none;
     -webkit-user-select: none;
     cursor: pointer;

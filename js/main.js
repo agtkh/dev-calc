@@ -33,7 +33,7 @@ function is_bin_num(char) {
     const bin_dict = "01";
     return (bin_dict.indexOf(char) != -1);
 }
-function is_dec_num() {
+function is_dec_num(char) {
     /**
      * これは10進数の数字か
      */
@@ -91,7 +91,8 @@ class Formula {
                 // 連続の記号入力
                 if (last_key == '=') {
                     // 結果を計算して計算式を更新
-                    this.formula_list = [calc_formula(this.to_str().slice(0, -1)), key];
+                    this.formula_list = [calc_formula(this.to_str().slice(0, -1))];
+                    if (key != '=') { this.formula_list.push(key); }
                 } else if (last_key != ')') {
                     // 上書き
                     this.formula_list[this.formula_list.length - 1] = key;
@@ -255,13 +256,13 @@ function fix_layout() {
         $(this).height(w);
         $(this).css('line-height', w + 'px');
     });
-    $('.result_icon').each(function () {
-        // 
-        let h = $(this).height();
-        $(this).width(h);
-        $(this).css('line-height', h + 'px');
-        $('#type').width(h);
-    });
+    // $('.result_icon').each(function () {
+    //     // 
+    //     let h = $(this).height();
+    //     $(this).width(h);
+    //     $(this).css('line-height', h + 'px');
+    //     $('#type').width(h);
+    // });
 }
 $(function () {
     fix_layout();
