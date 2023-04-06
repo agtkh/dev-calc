@@ -1,4 +1,4 @@
-# DevCalc 開発者用電卓(HTML Javascript)
+# dev-calc 開発者用電卓(HTML Javascript)
 
 BetterTouchToolsでのフローWEBで表示して使用する目的で作成
 - width:360, height:720 で設定。
