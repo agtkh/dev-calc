@@ -3,6 +3,11 @@
 BetterTouchToolsでのフローWEBで表示して使用する目的で作成
 - width:360, height:720 で設定。
 
+# Screenshot
+
+![](screenshot.png)
+
+
 ## TODO
 - [ ] 型選択 現在は4byte符号付き整数型(int)
 - [x] キーボード入力
